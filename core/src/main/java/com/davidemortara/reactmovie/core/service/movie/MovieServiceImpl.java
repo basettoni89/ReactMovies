@@ -1,6 +1,7 @@
 package com.davidemortara.reactmovie.core.service.movie;
 
 import com.davidemortara.reactmovie.core.model.MovieModel;
+import com.shadowings.simplelocator.SimpleLocator;
 
 import java.util.List;
 
@@ -15,23 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MovieServiceImpl implements MovieService {
 
-    private final MovieApi api;
+    private MovieApi api;
 
     public MovieServiceImpl(){
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        initialize(SimpleLocator.get(Retrofit.class));
+    }
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(client)
-                .build();
-
+    private void initialize(Retrofit retrofit){
         api = retrofit.create(MovieApi.class);
     }
 
