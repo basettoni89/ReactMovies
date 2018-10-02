@@ -3,7 +3,7 @@ package com.davidemortara.reactmvvm.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v17.leanback.app.RowsSupportFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +13,9 @@ import com.davidemortara.reactmvvm.viewmodel.IBaseViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseFragmentView<T extends IBaseViewModel> extends Fragment {
+public abstract class BaseRowsSupportFragmentView<T extends IBaseViewModel> extends RowsSupportFragment {
 
     protected T viewModel;
-
-    protected abstract int getLayoutId();
 
     protected T getViewModel() {
         return viewModel;
@@ -26,21 +24,6 @@ public abstract class BaseFragmentView<T extends IBaseViewModel> extends Fragmen
     protected void setViewModel(T viewModel) {
         this.viewModel = viewModel;
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), null);
-
-        findViews(view);
-
-        return view;
-    }
-
-    public void findViews(View inflatedView){
-
-    }
-
 
     //region lifecycle
 
