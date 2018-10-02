@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.davidemortara.reactmvvm.R;
 
+import com.davidemortara.reactmovie.R;
 import com.davidemortara.reactmovie.core.model.MovieModel;
 
 public class PopularCardPresenter extends Presenter {
