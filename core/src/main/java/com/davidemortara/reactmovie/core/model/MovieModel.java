@@ -1,5 +1,7 @@
 package com.davidemortara.reactmovie.core.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MovieModel {
     private long voteCount;
     private long id;
@@ -7,11 +9,17 @@ public class MovieModel {
     private double voteAverage;
     private String title;
     private double popularity;
+
+    @SerializedName("poster_path")
     private String posterPath;
+
     private String originalLanguage;
     private String originalTitle;
     private long[] genreIDS;
+
+    @SerializedName("backdrop_path")
     private String backdropPath;
+
     private boolean adult;
     private String overview;
     private String releaseDate;

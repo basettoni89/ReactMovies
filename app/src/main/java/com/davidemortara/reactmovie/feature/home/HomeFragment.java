@@ -42,7 +42,9 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
     }
 
     private void loadMovie(List<MovieModel> movies) {
-        ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+        ListRowPresenter rowPresenter = new ListRowPresenter(0, false);
+
+        ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(rowPresenter);
 
         /* Popular */
         HeaderItem popularPresenterHeader = new HeaderItem(0, "Most popular");

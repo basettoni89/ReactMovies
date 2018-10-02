@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.davidemortara.reactmovie.R;
 import com.davidemortara.reactmovie.core.model.MovieModel;
 
@@ -54,6 +57,12 @@ public class PopularCardPresenter extends Presenter {
         public void bind(MovieModel movie){
             title.setText(movie.getTitle());
             description.setText(movie.getOverview());
+
+            Glide.with(view.getContext())
+                    .load("http://image.tmdb.org/t/p/w342" + movie.getBackdropPath())
+                    .apply(RequestOptions.centerCropTransform())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(image);
         }
     }
 }
