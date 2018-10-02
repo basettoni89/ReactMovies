@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.davidemortara.reactmovie.R;
 import com.davidemortara.reactmovie.core.model.MovieModel;
 import com.davidemortara.reactmovie.feature.home.presenter.PopularCardPresenter;
+import com.davidemortara.reactmovie.feature.home.presenter.WatchedCardPresenter;
 import com.davidemortara.reactmvvm.view.BaseFragmentView;
 import com.davidemortara.reactmvvm.view.BaseRowsSupportFragmentView;
 
@@ -43,17 +44,31 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
     private void loadMovie(List<MovieModel> movies) {
         ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-        /* GridItemPresenter */
-        HeaderItem gridItemPresenterHeader = new HeaderItem(0, "Most popular");
+        /* Popular */
+        HeaderItem popularPresenterHeader = new HeaderItem(0, "Most popular");
 
-        PopularCardPresenter cardPresenter = new PopularCardPresenter();
-        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        PopularCardPresenter popularCardPresenter = new PopularCardPresenter();
+        ArrayObjectAdapter popularRowAdapter = new ArrayObjectAdapter(popularCardPresenter);
 
         for (MovieModel movie : movies) {
-            gridRowAdapter.add(movie);
+            popularRowAdapter.add(movie);
         }
 
-        mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
+        mRowsAdapter.add(new ListRow(popularPresenterHeader, popularRowAdapter));
+
+        /* Watched */
+        for(int row = 1; row <= 3; row++){
+            HeaderItem watchedPresenterHeader = new HeaderItem(row, "Watched " + row);
+
+            WatchedCardPresenter watchedCardPresenter = new WatchedCardPresenter();
+            ArrayObjectAdapter watchedRowAdapter = new ArrayObjectAdapter(watchedCardPresenter);
+
+            for (MovieModel movie : movies) {
+                watchedRowAdapter.add(movie);
+            }
+
+            mRowsAdapter.add(new ListRow(watchedPresenterHeader, watchedRowAdapter));
+        }
 
         /* Set */
         setAdapter(mRowsAdapter);
