@@ -1,5 +1,8 @@
 package com.davidemortara.reactmovie.core;
 
+import com.davidemortara.reactmovie.core.service.movie.MovieService;
+import com.davidemortara.reactmovie.core.service.movie.MovieServiceImpl;
+import com.davidemortara.reactmovie.core.service.movie.StubMovieServiceImpl;
 import com.shadowings.simplelocator.SimpleLocator;
 
 import okhttp3.OkHttpClient;
@@ -29,5 +32,12 @@ public class CoreModule {
                             .client(client)
                             .build();
                 });
+
+        SimpleLocator.register(MovieService.class, MovieServiceImpl::new);
+    }
+
+    public static void registerStub(){
+
+        SimpleLocator.register(MovieService.class, StubMovieServiceImpl::new);
     }
 }

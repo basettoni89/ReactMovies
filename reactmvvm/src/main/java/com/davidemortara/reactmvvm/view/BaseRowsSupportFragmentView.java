@@ -1,12 +1,6 @@
 package com.davidemortara.reactmvvm.view;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v17.leanback.app.RowsSupportFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.davidemortara.reactmvvm.viewmodel.IBaseViewModel;
 
@@ -25,8 +19,6 @@ public abstract class BaseRowsSupportFragmentView<T extends IBaseViewModel> exte
         this.viewModel = viewModel;
     }
 
-    //region lifecycle
-
     private CompositeDisposable compositeDisposable;
 
     @Override
@@ -35,10 +27,6 @@ public abstract class BaseRowsSupportFragmentView<T extends IBaseViewModel> exte
         viewModel.activated();
         bind();
     }
-
-    //endregion
-
-    //region rx
 
     @Override
     public void onPause() {
@@ -64,6 +52,4 @@ public abstract class BaseRowsSupportFragmentView<T extends IBaseViewModel> exte
     }
 
     protected abstract void registerRules();
-    //endregion
-
 }

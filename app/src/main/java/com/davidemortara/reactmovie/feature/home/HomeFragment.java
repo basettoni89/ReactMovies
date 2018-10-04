@@ -1,22 +1,15 @@
 package com.davidemortara.reactmovie.feature.home;
 
-import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
-import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.davidemortara.reactmovie.R;
 import com.davidemortara.reactmovie.core.model.MovieModel;
-import com.davidemortara.reactmovie.feature.home.presenter.PopularCardPresenter;
-import com.davidemortara.reactmovie.feature.home.presenter.WatchedCardPresenter;
-import com.davidemortara.reactmvvm.view.BaseFragmentView;
+import com.davidemortara.reactmovie.feature.home.card.PopularCardPresenter;
+import com.davidemortara.reactmovie.feature.home.card.PopularViewModel;
+import com.davidemortara.reactmovie.feature.home.card.WatchedCardPresenter;
 import com.davidemortara.reactmvvm.view.BaseRowsSupportFragmentView;
 
 import java.util.List;
@@ -41,7 +34,7 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
 
     }
 
-    private void loadMovie(List<MovieModel> movies) {
+    private void loadMovie(List<PopularViewModel> movieViewModels) {
         ListRowPresenter rowPresenter = new ListRowPresenter(0, false);
 
         ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(rowPresenter);
@@ -52,8 +45,8 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
         PopularCardPresenter popularCardPresenter = new PopularCardPresenter();
         ArrayObjectAdapter popularRowAdapter = new ArrayObjectAdapter(popularCardPresenter);
 
-        for (MovieModel movie : movies) {
-            popularRowAdapter.add(movie);
+        for (PopularViewModel movieViewModel : movieViewModels) {
+            popularRowAdapter.add(movieViewModel);
         }
 
         mRowsAdapter.add(new ListRow(popularPresenterHeader, popularRowAdapter));
@@ -65,8 +58,8 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
             WatchedCardPresenter watchedCardPresenter = new WatchedCardPresenter();
             ArrayObjectAdapter watchedRowAdapter = new ArrayObjectAdapter(watchedCardPresenter);
 
-            for (MovieModel movie : movies) {
-                watchedRowAdapter.add(movie);
+            for (PopularViewModel movieViewModel : movieViewModels) {
+                watchedRowAdapter.add(movieViewModel.movie);
             }
 
             mRowsAdapter.add(new ListRow(watchedPresenterHeader, watchedRowAdapter));

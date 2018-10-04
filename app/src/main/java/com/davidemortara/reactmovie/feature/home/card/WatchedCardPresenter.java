@@ -1,4 +1,4 @@
-package com.davidemortara.reactmovie.feature.home.presenter;
+package com.davidemortara.reactmovie.feature.home.card;
 
 import android.content.Context;
 import android.support.v17.leanback.widget.Presenter;
@@ -8,31 +8,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.davidemortara.reactmovie.R;
 import com.davidemortara.reactmovie.core.model.MovieModel;
 
-public class PopularCardPresenter extends Presenter {
-
+public class WatchedCardPresenter extends Presenter {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) parent.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.view_popular_card, parent, false);
+        View view = inflater.inflate(R.layout.view_watched_card, parent, false);
 
-        return new PopularCardViewHolder(view);
+        return new WatchedCardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
         if(item instanceof MovieModel){
-            if(viewHolder instanceof PopularCardViewHolder){
-                ((PopularCardViewHolder)viewHolder).bind((MovieModel) item);
+            if(viewHolder instanceof WatchedCardViewHolder){
+                ((WatchedCardViewHolder)viewHolder).bind((MovieModel) item);
             }
         }
+
     }
 
     @Override
@@ -40,29 +37,20 @@ public class PopularCardPresenter extends Presenter {
 
     }
 
-    private class PopularCardViewHolder extends ViewHolder{
+    private class WatchedCardViewHolder extends ViewHolder{
 
         private final ImageView image;
         private final TextView title;
-        private final TextView description;
 
-        public PopularCardViewHolder(View view) {
+        public WatchedCardViewHolder(View view) {
             super(view);
 
             image = view.findViewById(R.id.movie_image);
             title = view.findViewById(R.id.movie_title);
-            description = view.findViewById(R.id.movie_description);
         }
 
         public void bind(MovieModel movie){
             title.setText(movie.getTitle());
-            description.setText(movie.getOverview());
-
-            Glide.with(view.getContext())
-                    .load("http://image.tmdb.org/t/p/w342" + movie.getBackdropPath())
-                    .apply(RequestOptions.centerCropTransform())
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(image);
         }
     }
 }
