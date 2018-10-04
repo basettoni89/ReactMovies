@@ -15,7 +15,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class StubMovieServiceImpl implements MovieService {
+public class StubMovieServiceImpl extends MovieServiceImpl {
 
     private final Context context;
 

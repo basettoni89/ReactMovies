@@ -1,4 +1,4 @@
-package com.davidemortara.reactmovie.feature.home.card;
+package com.davidemortara.reactmovie.feature.home.card.popular;
 
 import com.davidemortara.reactmovie.core.model.MovieModel;
 import com.davidemortara.reactmvvm.viewmodel.BaseViewModel;

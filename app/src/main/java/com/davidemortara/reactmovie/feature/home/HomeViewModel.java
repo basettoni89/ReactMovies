@@ -2,8 +2,8 @@ package com.davidemortara.reactmovie.feature.home;
 
 import com.davidemortara.reactmovie.core.model.MovieModel;
 import com.davidemortara.reactmovie.core.service.movie.MovieService;
-import com.davidemortara.reactmovie.core.service.movie.MovieServiceImpl;
-import com.davidemortara.reactmovie.feature.home.card.PopularViewModel;
+import com.davidemortara.reactmovie.feature.home.card.popular.PopularViewModel;
+import com.davidemortara.reactmovie.feature.home.card.toprated.TopRatedViewModel;
 import com.davidemortara.reactmvvm.viewmodel.BaseViewModel;
 import com.shadowings.simplelocator.SimpleLocator;
 
@@ -18,6 +18,8 @@ public class HomeViewModel extends BaseViewModel {
 
     public BehaviorSubject<List<PopularViewModel>> popularMovies = BehaviorSubject.create();
 
+    public BehaviorSubject<List<TopRatedViewModel>> topRatedMovies = BehaviorSubject.create();
+
     public HomeViewModel(){
         movieService = SimpleLocator.get(MovieService.class);
     }
@@ -29,13 +31,24 @@ public class HomeViewModel extends BaseViewModel {
                 isActive
                     .flatMap(active -> movieService.getPopularList())
                     .subscribe(movieModels -> {
-                        List<PopularViewModel> viewModels = new ArrayList<>();
+                        List<PopularViewModel> popularViewModels = new ArrayList<>();
                         for (MovieModel movie : movieModels) {
-                            viewModels.add(new PopularViewModel(movie));
+                            popularViewModels.add(new PopularViewModel(movie));
                         }
-                        popularMovies.onNext(viewModels);
+                        popularMovies.onNext(popularViewModels);
                     })
         );
 
+        register(
+                isActive
+                        .flatMap(active -> movieService.getTopRatedList())
+                        .subscribe(movieModels -> {
+                            List<TopRatedViewModel> topRatedViewModels = new ArrayList<>();
+                            for (MovieModel movie : movieModels) {
+                                topRatedViewModels.add(new TopRatedViewModel(movie));
+                            }
+                            topRatedMovies.onNext(topRatedViewModels);
+                        })
+        );
     }
 }

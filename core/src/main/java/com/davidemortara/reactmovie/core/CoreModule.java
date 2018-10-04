@@ -38,6 +38,8 @@ public class CoreModule {
 
     public static void registerStub(){
 
+        register();
+
         SimpleLocator.register(MovieService.class, StubMovieServiceImpl::new);
     }
 }

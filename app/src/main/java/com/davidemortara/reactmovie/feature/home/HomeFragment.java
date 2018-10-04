@@ -1,15 +1,16 @@
 package com.davidemortara.reactmovie.feature.home;
 
+import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.util.Log;
 
-import com.davidemortara.reactmovie.core.model.MovieModel;
-import com.davidemortara.reactmovie.feature.home.card.PopularCardPresenter;
-import com.davidemortara.reactmovie.feature.home.card.PopularViewModel;
-import com.davidemortara.reactmovie.feature.home.card.WatchedCardPresenter;
+import com.davidemortara.reactmovie.feature.home.card.popular.PopularCardPresenter;
+import com.davidemortara.reactmovie.feature.home.card.popular.PopularViewModel;
+import com.davidemortara.reactmovie.feature.home.card.toprated.TopRatedCardPresenter;
+import com.davidemortara.reactmovie.feature.home.card.toprated.TopRatedViewModel;
 import com.davidemortara.reactmvvm.view.BaseRowsSupportFragmentView;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
     private static final int GRID_ITEM_WIDTH = 1700;
     private static final int GRID_ITEM_HEIGHT = 800;
 
+    private ArrayObjectAdapter rowsAdapter;
+
     public static HomeFragment newInstance(HomeViewModel viewModel){
         HomeFragment fragment = new HomeFragment();
         fragment.setViewModel(viewModel);
@@ -27,19 +30,27 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ListRowPresenter rowPresenter = new ListRowPresenter(0, false);
+        rowsAdapter = new ArrayObjectAdapter(rowPresenter);
+
+        setAdapter(rowsAdapter);
+    }
+
+    @Override
     protected void registerRules() {
 
         register(viewModel.popularMovies.subscribe(
-                this::loadMovie, (error) -> Log.e("HomeActivity", "Error", error)));
+                this::loadPopularMovie, (error) -> Log.e("HomeFragment", "Error", error)));
+
+        register(viewModel.topRatedMovies.subscribe(
+                this::loadTopRatedMovie, (error) -> Log.e("HomeFragment", "Error", error)));
 
     }
 
-    private void loadMovie(List<PopularViewModel> movieViewModels) {
-        ListRowPresenter rowPresenter = new ListRowPresenter(0, false);
-
-        ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(rowPresenter);
-
-        /* Popular */
+    private void loadPopularMovie(List<PopularViewModel> movieViewModels) {
         HeaderItem popularPresenterHeader = new HeaderItem(0, "Most popular");
 
         PopularCardPresenter popularCardPresenter = new PopularCardPresenter();
@@ -49,23 +60,19 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
             popularRowAdapter.add(movieViewModel);
         }
 
-        mRowsAdapter.add(new ListRow(popularPresenterHeader, popularRowAdapter));
+        rowsAdapter.add(new ListRow(popularPresenterHeader, popularRowAdapter));
+    }
 
-        /* Watched */
-        for(int row = 1; row <= 3; row++){
-            HeaderItem watchedPresenterHeader = new HeaderItem(row, "Watched " + row);
+    private void loadTopRatedMovie(List<TopRatedViewModel> topRatedViewModels) {
+        HeaderItem watchedPresenterHeader = new HeaderItem(1, "Top rated");
 
-            WatchedCardPresenter watchedCardPresenter = new WatchedCardPresenter();
-            ArrayObjectAdapter watchedRowAdapter = new ArrayObjectAdapter(watchedCardPresenter);
+        TopRatedCardPresenter topRatedCardPresenter = new TopRatedCardPresenter();
+        ArrayObjectAdapter topRatedRowAdapter = new ArrayObjectAdapter(topRatedCardPresenter);
 
-            for (PopularViewModel movieViewModel : movieViewModels) {
-                watchedRowAdapter.add(movieViewModel.movie);
-            }
-
-            mRowsAdapter.add(new ListRow(watchedPresenterHeader, watchedRowAdapter));
+        for (TopRatedViewModel movieViewModel : topRatedViewModels) {
+            topRatedRowAdapter.add(movieViewModel);
         }
 
-        /* Set */
-        setAdapter(mRowsAdapter);
+        rowsAdapter.add(new ListRow(watchedPresenterHeader, topRatedRowAdapter));
     }
 }

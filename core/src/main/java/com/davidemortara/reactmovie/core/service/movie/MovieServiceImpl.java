@@ -33,4 +33,12 @@ public class MovieServiceImpl implements MovieService {
                 .subscribeOn(Schedulers.io())
                 .map(MovieListResponse::getMovies);
     }
+
+    @Override
+    public Observable<List<MovieModel>> getTopRatedList() {
+        return api.getTopRatedList(1, "6cbb0f0e7c486b3b4fa8ed1e2ab3f347", "en")
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .map(MovieListResponse::getMovies);
+    }
 }

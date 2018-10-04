@@ -10,4 +10,6 @@ public interface MovieService {
 
     Observable<List<MovieModel>> getPopularList();
 
+    Observable<List<MovieModel>> getTopRatedList();
+
 }
