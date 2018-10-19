@@ -17,9 +17,6 @@ import java.util.List;
 
 public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
 
-    private static final int GRID_ITEM_WIDTH = 1700;
-    private static final int GRID_ITEM_HEIGHT = 800;
-
     private ArrayObjectAdapter rowsAdapter;
 
     public static HomeFragment newInstance(HomeViewModel viewModel){
@@ -33,7 +30,7 @@ public class HomeFragment extends BaseRowsSupportFragmentView<HomeViewModel> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ListRowPresenter rowPresenter = new ListRowPresenter(0, false);
+        HomeListRowPresenter rowPresenter = new HomeListRowPresenter(0, false);
         rowsAdapter = new ArrayObjectAdapter(rowPresenter);
 
         setAdapter(rowsAdapter);

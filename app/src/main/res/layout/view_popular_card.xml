@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="750dp"
     android:layout_height="500dp"
-    android:background="#ffffff"
     android:focusable="true"
     tools:layout_editor_absoluteY="89dp">
 
@@ -21,6 +20,7 @@
 
     <TextView
         android:id="@+id/movie_title"
+        style="@style/Widget.Leanback.Row.HoverCardTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -28,10 +28,12 @@
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/movie_description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Jumanji" />
 
     <TextView
         android:id="@+id/movie_description"
+        style="@style/Widget.Leanback.Row.HoverCardDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -43,5 +45,6 @@
         android:minLines="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Sheriff's deputy Rick Grimes awakens from a coma to find a post-apocalyptic world dominated by flesh-eating zombies. He sets out to find his family and encounters many other survivors along the way." />
 </android.support.constraint.ConstraintLayout>
